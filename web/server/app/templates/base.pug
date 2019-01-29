@@ -1,0 +1,11 @@
+!!! 5
+html(lang="en")
+  head
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    div#main
+      navbar
+      {% block page %}
+      {% endblock %}
+    script(src='http://localhost:8081/dist/bundle.js')

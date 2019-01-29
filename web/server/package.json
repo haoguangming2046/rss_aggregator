@@ -1,0 +1,33 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Frontend for RSS aggregator",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cross-env": "latest",
+    "css-loader": "latest",
+    "file-loader": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-core": "latest",
+    "node-sass": "latest",
+    "sass-loader": "latest",
+    "babel-loader": "latest",
+    "babel-preset-env": "latest",
+    "babel-preset-stage-3": "latest",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
+    "vue-loader": "latest",
+    "vue-template-compiler": "latest",
+    "webpack": "latest",
+    "webpack-cli": "latest",
+    "webpack-dev-server": "latest"
+  }
+}
