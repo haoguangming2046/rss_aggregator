@@ -1,0 +1,31 @@
+{% load staticfiles %}
+{% load sass_tags %}
+!!! 5
+html(lang="en")
+  head
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
+    link(href='{% sass_src "css/main.scss" %}' rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    div#main.container-fluid
+      div.row.mt-5
+        div.col-sm-4.offset-sm-4.mt-5
+          form(method='post')
+            {% csrf_token %}
+            {% if form.errors %}
+            {% for field in form %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            div.alert.alert-danger
+              strong {{field.name.title}}: {{ error|escape }}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            div.alert.alert-danger
+              strong {{ error|escape }}
+            {% endfor %}
+            {% endif %}
+            {% block form %}
+            {% endblock %}

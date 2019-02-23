@@ -1,11 +1,20 @@
+{% load staticfiles %}
+{% load sass_tags %}
 !!! 5
 html(lang="en")
   head
     link(href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet")
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
+    link(href='{% sass_src "css/main.scss" %}' rel="stylesheet")
     meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
     div#main
-      navbar
+      div.row
+        div#c-notification-vue.col-sm-4
+      nav-bar
       {% block page %}
       {% endblock %}
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js')
     script(src='http://localhost:8081/dist/bundle.js')

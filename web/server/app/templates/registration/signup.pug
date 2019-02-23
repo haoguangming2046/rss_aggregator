@@ -1,0 +1,21 @@
+{% extends "registration/base.pug" %}
+{% block form %}
+h3.c-navbar-text Signup
+.form-group
+  label Email address
+  input.form-control(name="username" type='email' aria-describedby='emailHelp' placeholder='Enter email')
+  small#emailHelp.form-text.text-muted Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only
+.form-group
+  label Password
+  input#InputPassword1.form-control(name="password1" type='password' placeholder='Password')
+  small#InputPassword1.form-text.text-muted Your password can't be too similar to your other personal information.
+  small#InputPassword1.form-text.text-muted Your password must contain at least 8 characters.
+  small#InputPassword1.form-text.text-muted Your password can't be a commonly used password.
+  small#InputPassword1.form-text.text-muted Your password can't be entirely numeric.
+.form-group
+  label Password Confirmation
+  input#InputPassword2.form-control(name="password2" type='password' placeholder='Password')
+  small#InputPassword2.form-text.text-muted Enter the same password as before, for verififcation.
+.form-check
+button.btn.btn-primary(type="submit") Sign Up
+{% endblock %}

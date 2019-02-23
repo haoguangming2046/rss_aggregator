@@ -1,0 +1,97 @@
+@import "variables.scss";
+
+// Note: classes start with c- indicates those classes are declared in this file
+// Common Layout
+html, body {
+  font-family: 'Roboto' !important;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  @media screen and (min-width: 900px) {
+    font-size: 14px;
+  }
+  @media screen and (min-width: 1200px) {
+    font-size: 16px;
+  }
+}
+
+// Main Div used in base.pug
+#main {
+  background-image: linear-gradient(to top right, rgba(179, 186, 253, 0.7), rgba(162, 148, 239, 0.7), rgba(228, 202, 246, 0.7), rgba(244, 222, 226, 0.7), rgba(253, 210, 226, 0.7));
+  // background-image: linear-gradient(RGBA(242, 153, 74, 0.7), RGBA(242, 201, 76, 0.7));
+  // background-image: linear-gradient(to top right, RGBA(130, 63, 177, 0.7), RGBA(250, 34, 42, 0.7), RGBA(250, 175, 80, 0.7));
+  height: auto;
+  min-height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+}
+
+// Text and Background Classes
+.c-navbar-text {
+  color: $color-primary-text;
+}
+.c-black-text {
+  color: $color-black-text;
+}
+.c-navbar-text-underline {
+  text-decoration: underline;
+}
+
+// Card
+.c-card {
+  border-radius: 1rem;
+  background-color: $color-whiteish;
+  box-shadow: 0.5rem 0.6rem RGBA(202, 178, 227, 0.2);
+}
+
+// Slide Animation
+.c-slide-animated {
+  animation-name: slide;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  visibility: visible !important;
+}
+@keyframes slide {
+  0% {
+    transform: translateY(-100%);
+  }
+  50%{
+    transform: translateY(8%);
+  }
+  65%{
+    transform: translateY(-4%);
+  }
+  80%{
+    transform: translateY(4%);
+  }
+  95%{
+    transform: translateY(-2%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+// For Notifications
+#c-notification-vue {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  max-height: 80%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+// Miscellaneous Helpers
+.c-no-padding {
+  padding: 0 !important;
+}
+.c-no-margin {
+  margin: 0 !important;
+}

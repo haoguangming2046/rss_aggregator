@@ -1,0 +1,14 @@
+{% extends "registration/base.pug" %}
+{% block form %}
+h3.c-navbar-text Login
+.form-group
+  label Email address
+  input.form-control(name="username" type='email' aria-describedby='emailHelp' placeholder='Enter email')
+  small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
+.form-group
+  label Password
+  input#InputPassword.form-control(name="password" type='password' placeholder='Password')
+.form-check
+button.btn.btn-primary(type='submit') Login
+a.ml-2.btn.btn-primary(href="/signup") Sign Up
+{% endblock %}

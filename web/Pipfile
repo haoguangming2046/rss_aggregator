@@ -4,11 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-pypugjs = "*"
+django = "2.1.7"
+pypugjs = "5.7.2"
+libsass = "0.17.0"
+django-sass-processor = "0.7.2"
 
 [dev-packages]
-django-extensions = "*"
+django-extensions = "2.1.6"
+pep8 = "1.7.1"
 
 [requires]
 python_version = "3.6"
