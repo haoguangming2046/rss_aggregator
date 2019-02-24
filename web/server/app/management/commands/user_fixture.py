@@ -9,8 +9,9 @@ class Command(BaseCommand):
         super(Command, self).add_arguments(parser)
 
     def handle(self, *args, **options):
-        user = User.objects.get(username="admin@rss.com")
-        if not user:
+        try:
+            User.objects.get(username="admin@rss.com")
+        except User.DoesNotExist:
             User.objects.create_superuser(
                 username="admin@rss.com",
                 email="admin@rss.com",

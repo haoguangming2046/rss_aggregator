@@ -100,13 +100,14 @@ USE_TZ = True
 
 STATIC_ROOT = 'static/'
 STATIC_URL = '/static/'
-SASS_PROCESSOR_INCLUDE_DIRS = (os.path.join(BASE_DIR, 'static'), )
-SASS_PROCESSOR_ENABLED = True
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
 )
+SASS_PROCESSOR_ROOT = STATIC_ROOT
+SASS_PROCESSOR_INCLUDE_DIRS = (os.path.join(BASE_DIR, 'app/static/css'), )
+SASS_PROCESSOR_ENABLED = True
 
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/home'

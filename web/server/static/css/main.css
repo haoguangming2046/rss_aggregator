@@ -1,0 +1,85 @@
+html, body {
+  font-family: 'Roboto' !important; }
+
+html, body {
+  height: 100%;
+  margin: 0; }
+  @media screen and (min-width: 900px) {
+    html, body {
+      font-size: 14px; } }
+  @media screen and (min-width: 1200px) {
+    html, body {
+      font-size: 16px; } }
+
+#main {
+  background-image: linear-gradient(to top right, RGBA(224, 234, 251, 1), RGBA(207, 222, 242, 1), RGBA(224, 234, 251, 1), RGBA(207, 222, 242, 1));
+  height: auto;
+  min-height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute; }
+
+.c-navbar-text {
+  color: #0C59B0; }
+
+.c-black-text {
+  color: #000000; }
+
+.c-navbar-text-underline {
+  text-decoration: underline; }
+
+.c-card {
+  border-radius: 1rem;
+  background-color: #FAFAFA;
+  box-shadow: 0.5rem 0.6rem RGBA(202, 178, 227, 0.2); }
+
+.c-img-div {
+  display: table; }
+  .c-img-div a {
+    vertical-align: middle;
+    display: table-cell; }
+    .c-img-div a img {
+      border-radius: 0.5em;
+      overflow: hidden;
+      display: block;
+      height: auto;
+      width: 100%; }
+
+.c-slide-animated {
+  animation-name: slide;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  visibility: visible !important; }
+
+@keyframes slide {
+  0% {
+    transform: translateY(-100%); }
+  50% {
+    transform: translateY(8%); }
+  65% {
+    transform: translateY(-4%); }
+  80% {
+    transform: translateY(4%); }
+  95% {
+    transform: translateY(-2%); }
+  100% {
+    transform: translateY(0%); } }
+
+#c-notification-vue {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  max-height: 80%;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.c-no-padding {
+  padding: 0 !important; }
+
+.c-no-margin {
+  margin: 0 !important; }
+
+/*# sourceMappingURL=main.css.map */

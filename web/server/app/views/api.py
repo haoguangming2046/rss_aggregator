@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from app.stubs.feed_service import (
     get_all_feed_sources, get_feeds, get_user_bookmarks,
     create_user_bookmark, create_user_comment, update_feed_source,
-    create_feed_source,
+    create_feed_source, get_custom_feeds
 )
 
 
@@ -24,6 +24,15 @@ def api_all_feeds(request):
     """
     if request.is_ajax():
         return JsonResponse(get_feeds())
+
+
+@login_required
+def api_custom_feeds(request):
+    """ This views to retreive feeds
+    """
+    if request.is_ajax():
+        paginate_number = request.GET.get("paginate_number", "0")
+        return JsonResponse(get_custom_feeds(paginate_number))
 
 
 @login_required

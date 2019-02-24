@@ -106,11 +106,14 @@ def _try_from_page_extract(feed):
     for link in feed["links"]:
         href = link.get("href", "")
         if href:
-            html_content = urlopen(href).read()
-            soup = BeautifulSoup(html_content)
-            for meta in soup(["meta"]):
-                for meta_key, meta_value in meta.attrs.items():
-                    if "property" == meta_key and meta_value == "og:image":
-                        link_text = meta.get("content", "")
-                        break
+            try:
+                html_content = urlopen(href).read()
+                soup = BeautifulSoup(html_content)
+                for meta in soup(["meta"]):
+                    for meta_key, meta_value in meta.attrs.items():
+                        if "property" == meta_key and meta_value == "og:image":
+                            link_text = meta.get("content", "")
+                            break
+            except Exception:
+                pass
     return link_text

@@ -20,12 +20,13 @@ def create_new_feed(feed, source):
     """
     try:
         with transaction.atomic():
+            slug = feed.get("id") + feed.get('title')
             new_feed = Feed.objects.create(
-                feed_id=feed["id"],
-                title=feed["title"],
-                summary=feed["summary"],
-                author=feed["author"],
-                slug=slugify(feed["id"] + feed['title']),
+                feed_id=feed.get("id"),
+                title=feed.get("title"),
+                summary=feed.get("summary", ""),
+                author=feed.get("author", ""),
+                slug=slugify(slug[0:254]),
                 link=get_link_from_feed(feed),
                 links=get_links_from_feed(feed),
                 source=source,
@@ -45,20 +46,18 @@ def create_new_feed(feed, source):
 
 
 def get_all_feeds(request):
-    """ Return 10 feeds at a time
+    """ Return all feeds
     """
-    feeds = Feed.objects.all().order_by('-id')[:50]
+    feeds = Feed.objects.all().order_by('-id')
     return get_feed_list(feeds)
 
 
 def get_custom_feeds(request):
     """ Return 10 feeds with custom query params
     """
-    if request.type == 1:
-        feeds = Feed.objects.filter(source=request.feed_id).order_by('-id')[:10]
-    if request.type == 2:
-        bookmarks = Bookmarked.objects.filter(user=request.user.username).order_by('-id')[:10]
-        feeds = [bookmark.feed for bookmark in bookmarks]
+    start = int(request.paginate_number) * 10
+    end = start + 10
+    feeds = Feed.objects.all().order_by('-id')[start: end]
     return get_feed_list(feeds)
 
 
@@ -140,14 +139,12 @@ def create_new_feed_source(link):
                 logo_link = response["details"]["image"]["href"]
             else:
                 logo_link = ''
-            source = FeedSource.objects.create(
+            FeedSource.objects.create(
                 name=response["details"]["title"],
                 link=link,
                 logo_link=logo_link,
                 details=json.dumps(response["details"]),
             )
-            for feed in response["feeds"]:
-                create_new_feed(feed, source)
         else:
             return feeds_pb2.OperationStatus(
                 op_status=feeds_pb2.Status.Value('FAILURE'),

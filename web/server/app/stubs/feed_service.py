@@ -1,3 +1,4 @@
+# Service file used to talk to grpc service and helper methods for views
 import os
 
 import grpc
@@ -22,32 +23,38 @@ stub = feeds_pb2_grpc.FeedsStub(channel)
 
 def get_all_feed_sources():
     response = stub.GetAllFeedSources(feeds_pb2.EmptyRequest())
-    return MessageToDict(response)
+    return MessageToDict(response, including_default_value_fields=True)
 
 
 def create_feed_source(link):
     response = stub.CreateFeedSource(feeds_pb2.FeedSource(link=link))
-    return MessageToDict(response)
+    return MessageToDict(response, including_default_value_fields=True)
 
 
 def update_feed_source(source_id):
     response = stub.UpdateFeedSource(feeds_pb2.FeedSource(id=source_id))
-    return MessageToDict(response)
+    return MessageToDict(response, including_default_value_fields=True)
 
 
 def get_feeds():
-    response = stub.GetAllFeeds(feeds_pb2.Query())
-    return MessageToDict(response)
+    response = stub.GetAllFeeds(feeds_pb2.EmptyRequest())
+    return MessageToDict(response, including_default_value_fields=True)
+
+
+def get_custom_feeds(paginate_number="0"):
+    query = feeds_pb2.Query(paginate_number=paginate_number)
+    response = stub.GetCustomFeeds(query)
+    return MessageToDict(response, including_default_value_fields=True)
 
 
 def get_feed(slug):
     response = stub.GetFeed(feeds_pb2.Feed(slug=slug))
-    return MessageToDict(response)
+    return MessageToDict(response, including_default_value_fields=True)
 
 
 def get_user_bookmarks(username):
     response = stub.GetAllBookmark(feeds_pb2.User(username=username))
-    return MessageToDict(response)
+    return MessageToDict(response, including_default_value_fields=True)
 
 
 def create_user_bookmark(feed_id, username):

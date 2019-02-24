@@ -5,8 +5,8 @@ RUN mkdir /code
 RUN pip install pipenv
 COPY Pipfile /code/
 WORKDIR /code
-RUN pipenv lock -r > requirements.txt
-RUN pipenv lock -r -d > requirements-dev.txt
+RUN pipenv lock -r -d > requirements.txt
 RUN pip install -r requirements.txt
-RUN pip install -r requirements-dev.txt
 COPY . /code/
+RUN pycodestyle
+RUN pytest

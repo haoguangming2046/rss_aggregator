@@ -1,12 +1,13 @@
 {
-  "name": "frontend",
-  "version": "1.0.0",
+  "name": "rss-aggregator",
+  "version": "0.0.1",
   "description": "Frontend for RSS aggregator",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --mode development --port 8081",
-    "build": "wwebpack --progress --mode development",
-    "release": "webpack --progress --mode production && cp app/src/dist/bundle.js app/static/js/bundle.js"
+    "dev": "webpack-dev-server --hot --port 8081",
+    "release": "webpack --progress && cp app/src/dist/bundle.js app/static/js/bundle.js",
+    "test": "mocha-webpack --webpack-config webpack.config.js --require app/src/test/setup.js app/src/test/*.spec.js",
+    "lint": "node_modules/eslint/bin/eslint.js 'app/src/**/*.{js,vue}'"
   },
   "repository": {
     "type": "git",
@@ -26,19 +27,26 @@
   },
   "devDependencies": {
     "@babel/core": "7.2.2",
+    "@vue/test-utils": "1.0.0-beta.29",
     "acorn": "6.0.0",
     "babel-core": "6.26.3",
     "babel-loader": "8.0.5",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-3": "6.24.1",
+    "eslint": "5.0.0",
+    "eslint-plugin-vue": "5.2.2",
+    "expect": "24.1.0",
+    "jsdom": "13.2.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "6.0.2",
+    "mocha-webpack": "1.1.0",
     "node-sass": "4.11.0",
     "pug": "2.0.3",
     "pug-plain-loader": "1.0.0",
     "sass-loader": "7.1.0",
     "vue-loader": "15.6.2",
     "vue-template-compiler": "2.5.22",
-    "webpack": "4.29.0",
-    "webpack-cli": "3.2.1",
-    "webpack-dev-server": "3.1.14"
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.11.1"
   }
 }

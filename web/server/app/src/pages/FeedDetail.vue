@@ -49,74 +49,73 @@ div.container-fluid.my-3
 
 <script>
 import Vue from "vue";
-import marked from 'marked';
+import marked from "marked";
 
-import helpers from '../helpers/index';
-import LeftSideBar from '../components/LeftSideBar';
-import RightSideBar from '../components/RightSideBar';
-import Feed from '../components/Feed';
+import helpers from "../helpers/index";
+import LeftSideBar from "../components/LeftSideBar";
+import RightSideBar from "../components/RightSideBar";
+import Feed from "../components/Feed";
 
 export default {
-  components: {
-    'left-side-bar': LeftSideBar,
-    'right-side-bar': RightSideBar,
-    'feed': Feed,
-  },
-  mixins: [helpers],
-  props: {
-    commonData: {
-      type: Object,
-      default: () => {},
-    },
-    feed: {
-      type: Object,
-      default: () => {},
-    },
-  },
-  data() {
-    return {
-      dataFeed: this.feed,
-    }
-  },
-  created() {
-    this.$store.commit('setCommonData', this.commonData);
-    Vue.set(this.dataFeed, "commentText", '');
-    if (!this.dataFeed.hasOwnProperty("commentData")) {
-      Vue.set(this.dataFeed, "commentData", []);
-    }
-  },
-  computed: {
-    getCommonData() {
-      return this.$store.state.commonData;
-    }
-  },
-  methods: {
-    bookmark() {
-      this.$store.commit('bookmarkFeed', this.dataFeed);
-    },
-    writeComment(feed) {
-      if (!this.feed.commentText.trim()) {
-        this.createNotification({message: "Please enter some text.", context: "alert-info"});
-      } else {
-        this.$axios.post('/api/user/comment/create', {
-          data: {
-            feed: this.dataFeed,
-          },
-        }).then(response => {
-          this.dataFeed.commentData.push({user: {username: this.$store.state.commonData.userName}, text:this.dataFeed.commentText, addedOn: 'Now'});
-          this.dataFeed.commentText = "";
-          helpers.methods.createNotification({message: "Comment Added :)", context: "alert-success"});
-        }).catch(error =>{
-          helpers.methods.createNotification({message: "Could not add comment :("});
-          console.log(error);
-        });
-      }
-    },
-    compiledMarkup(commentText) {
-      return marked(commentText, {sanitize: true});
-    },
-  }
-}
+	components: {
+		"left-side-bar": LeftSideBar,
+		"right-side-bar": RightSideBar,
+		"feed": Feed,
+	},
+	mixins: [helpers],
+	props: {
+		commonData: {
+			type: Object,
+			default: () => {},
+		},
+		feed: {
+			type: Object,
+			default: () => {},
+		},
+	},
+	data() {
+		return {
+			dataFeed: this.feed,
+		};
+	},
+	computed: {
+		getCommonData() {
+			return this.$store.state.commonData;
+		}
+	},
+	created() {
+		this.$store.commit("setCommonData", this.commonData);
+		Vue.set(this.dataFeed, "commentText", "");
+		if (!this.dataFeed.hasOwnProperty("commentData")) {
+			Vue.set(this.dataFeed, "commentData", []);
+		}
+	},
+	methods: {
+		bookmark() {
+			this.$store.commit("bookmarkFeed", this.dataFeed);
+		},
+		writeComment() {
+			if (!this.feed.commentText.trim()) {
+				this.createNotification({message: "Please enter some text.", context: "alert-info"});
+			} else {
+				this.$axios.post("/api/user/comment/create", {
+					data: {
+						feed: this.dataFeed,
+					},
+				}).then(() => {
+					this.dataFeed.commentData.push({user: {username: this.$store.state.commonData.userName}, text:this.dataFeed.commentText, addedOn: "Now"});
+					this.dataFeed.commentText = "";
+					helpers.methods.createNotification({message: "Comment Added :)", context: "alert-success"});
+				}).catch(() =>{
+					helpers.methods.createNotification({message: "Could not add comment :("});
+				});
+			}
+		},
+		compiledMarkup(commentText) {
+			return marked(commentText, {sanitize: true});
+		},
+	}
+};
 </script>
 
 <style lang="scss" scoped>

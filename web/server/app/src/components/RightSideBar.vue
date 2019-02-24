@@ -13,16 +13,16 @@ div.text-center
 
 <script>
 export default {
-  data() {
-    return {
-      ads: [
-        {name: 'Pyfiddle.io', 'link': 'https://pyfiddle.io', background: 'https://zappa-rhv3u5qby.s3.amazonaws.com/images/python-logo.png'},
-        {name: 'Priyank\'s Humble Adobe', 'link': 'https://priyank.co.uk', background: 'https://priyank.co.uk/img/about-alt.jpg'},
-        {name: 'Clarion Call', 'link': 'https://clarioncall.in', background: 'http://clarioncall.in/assets/images/section-13.jpg'}
-      ],
-    }
-  }
-}
+	data() {
+		return {
+			ads: [
+				{name: "Pyfiddle.io", "link": "https://pyfiddle.io", background: "https://zappa-rhv3u5qby.s3.amazonaws.com/images/python-logo.png"},
+				{name: "Priyank's Humble Adobe", "link": "https://priyank.co.uk", background: "https://priyank.co.uk/img/about-alt.jpg"},
+				{name: "Clarion Call", "link": "https://clarioncall.in", background: "http://clarioncall.in/assets/images/section-13.jpg"}
+			],
+		};
+	}
+};
 </script>
 
 <style lang="scss" scoped>

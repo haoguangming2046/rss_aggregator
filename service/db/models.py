@@ -12,7 +12,7 @@ except Exception:
 class FeedSource(models.Model):
     name = models.TextField(null=False)
     status = models.BooleanField(default=True)
-    link = models.TextField(null=False, default='', unique=True)
+    link = models.TextField(null=False, default='')
     logo_link = models.TextField(default='')
     last_active_on = models.DateTimeField(auto_now_add=True)
     details = models.TextField()
@@ -35,10 +35,10 @@ class Feed(models.Model):
     feed_id = models.CharField(max_length=100, null=False, default='', unique=True)
     title = models.TextField(null=False, default='')
     summary = models.TextField()
-    author = models.CharField(max_length=100, null=False, default='')
+    author = models.CharField(max_length=100, blank=True, default='')
     added_on = models.DateTimeField(auto_now_add=True)
     source = models.ForeignKey(FeedSource, on_delete=models.CASCADE)
-    slug = models.TextField(null=False, unique=True)
+    slug = models.CharField(max_length=255, null=False, unique=True)
     link = models.TextField(blank=True, default='')
     links = models.TextField()
 
@@ -46,7 +46,7 @@ class Feed(models.Model):
         return self.title
 
     def clean(self):
-        if not (self.feed_id or self.title or self.summary or self.author or self.source):
+        if not (self.feed_id or self.title or self.slug or self.source):
             raise ValidationError(
                 {NON_FIELD_ERRORS: 'Insufficient Data'}
             )

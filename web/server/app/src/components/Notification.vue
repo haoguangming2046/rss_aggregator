@@ -7,34 +7,33 @@ div.row.v-notification("v-if"='canShowNotification')
 
 <script>
 export default {
-  props: {
-    message: {
-      type: String,
-      default: 'Unknown Error Occured',
-    },
-    context: {
-      type: String,
-      default: 'alert-danger',
-    },
-    time: {
-      type: Number,
-      default: 4000,
-    },
-  },
-  data() {
-    return {
-      canShowNotification: true,
-    }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.canShowNotification = false;
-      },
-      this.time,
-    );
-  },
-}
+	props: {
+		message: {
+			type: String,
+			default: "Unknown Error Occured",
+		},
+		context: {
+			type: String,
+			default: "alert-danger",
+		},
+		time: {
+			type: Number,
+			default: 4000,
+		},
+	},
+	data() {
+		return {
+			canShowNotification: true,
+		};
+	},
+	mounted() {
+		setTimeout(() => {
+			this.canShowNotification = false;
+		}, this.time);
+	},
+};
 </script>
+
 <style scoped>
 .v-notification {
   display: inline-block; margin: 0 auto;

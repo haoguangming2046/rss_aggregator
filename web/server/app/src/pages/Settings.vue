@@ -13,7 +13,7 @@ div.container-fluid.my-3
             input.form-control(v-model='sourceLink' type="text" name="link" placeholder="Source Link ...")
           div.col-sm-3
             button.btn.btn-primary(type="button" @click='addNewSource') Add
-      template(v-for='source in feedSourcesList.data')
+      template(v-for='source in feedSourcesList')
         div
           div.mb-4.p-2.c-card.c-slide-animated
             div.row
@@ -28,7 +28,7 @@ div.container-fluid.my-3
                 h6
                   button.btn.btn-primary(type='button' data-toggle='modal' data-target='#modal') Source Details
               div.col-sm-3.c-img-div
-                a.v-cursor-pointer(@click='changeSourceStatus(source)' )
+                a.v-cursor-pointer(@click='changeSourceStatus(source)' title="Update running status of Source")
                   img.img-fluid(src="../../static/images/logo.png" :class='source.status ? "v-running-img": "" ')
         div#modal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='modalLabel' aria-hidden='true')
           .modal-dialog(role='document')
@@ -45,78 +45,86 @@ div.container-fluid.my-3
 </template>
 
 <script>
-import LeftSideBar from '../components/LeftSideBar';
-import RightSideBar from '../components/RightSideBar';
-import FeedList from '../components/FeedList';
-import helpers from '../helpers/index';
+import Vue from "vue";
+
+import LeftSideBar from "../components/LeftSideBar";
+import RightSideBar from "../components/RightSideBar";
+import helpers from "../helpers/index";
 
 export default {
-  components: {
-    'left-side-bar': LeftSideBar,
-    'right-side-bar': RightSideBar,
-  },
-  mixins: [helpers],
-  props: {
-    commonData: {
-      type: Object,
-      default: '{}',
-    },
-    feedSources: {
-      type: Object,
-      default: '{}',
-    }
-  },
-  data() {
-    return {
-      sourceLink: '',
-      feedSourcesList: this.feedSources,
-    }
-  },
-  created() {
-    this.$store.commit('setCommonData', this.commonData);
-  },
-  methods: {
-    changeSourceStatus(source) {
-      this.$axios.post(`api/feed/source/${source.id}/update/`, {
-        data: {
-          source: source,
-        }
-      }).then(response => {
-        if ("opStatus" in response.data) {
-          if (response.data.opStatus == "SUCCESS") {
-            source.status = !source.status;
-            this.createNotification({message: 'Updated Source :)', context: 'alert-success'});
-          } else {
-            this.createNotification({message: 'Could not update feed source :('});
-          }
-        } else {
-          this.createNotification({message: 'Could not update feed source :('});
-        }
-      }).catch(error => {
-        this.createNotification({message: 'Could not update feed source :('});
-        console.log(error);
-      });
-    },
-    addNewSource() {
-      this.$axios.post('api/feed/source/create', {
-        data: {
-          link: this.sourceLink,
-        }
-      }).then(response => {
-        if (response.data.opStatus == "SUCCESS" ){
-          this.createNotification({message: 'Added New Source :)', context: 'alert-success'});
-        } else {
-          response.data.details.errors.data.forEach(errorMsg => {
-            this.createNotification({message: errorMsg})
-          });
-        }
-      }).catch(error => {
-        this.createNotification({message: 'Could not add new Source :('});
-        console.log(error);
-      });
-    }
-  }
-}
+	components: {
+		"left-side-bar": LeftSideBar,
+		"right-side-bar": RightSideBar,
+	},
+	mixins: [helpers],
+	props: {
+		commonData: {
+			type: Object,
+			default: () => "{}",
+		},
+		feedSources: {
+			type: Object,
+			default: () => "{}",
+		}
+	},
+	data() {
+		return {
+			sourceLink: "",
+			feedSourcesList: this.feedSources.data,
+		};
+	},
+	created() {
+		this.$store.commit("setCommonData", this.commonData);
+		this.feedSourcesList.forEach(source => {
+			Vue.set(source, "pending", false);
+		});
+	},
+	methods: {
+		changeSourceStatus(source) {
+			if (!source.pending) {
+				source.pending = true;
+				this.$axios.post(`api/feed/source/${source.id}/update/`, {
+					data: {
+						source: source,
+					}
+				}).then(response => {
+					source.pending = false;
+					if ("opStatus" in response.data) {
+						if (response.data.opStatus == "SUCCESS") {
+							source.status = !source.status;
+							this.createNotification({message: "Updated Source :)", context: "alert-success"});
+						} else {
+							this.createNotification({message: "Could not update feed source :("});
+						}
+					} else {
+						this.createNotification({message: "Could not update feed source :("});
+					}
+				}).catch(() => {
+					source.pending = false;
+					this.createNotification({message: "Could not update feed source :("});
+				});
+			}
+		},
+		addNewSource() {
+			this.$axios.post("api/feed/source/create", {
+				data: {
+					link: this.sourceLink,
+				}
+			}).then(response => {
+				if (response.data.opStatus == "SUCCESS" ){
+					this.createNotification({message: "Added New Source :)", context: "alert-success"});
+					this.sourceLink = "";
+				} else {
+					response.data.details.errors.data.forEach(errorMsg => {
+						this.createNotification({message: errorMsg});
+					});
+				}
+			}).catch(() => {
+				this.createNotification({message: "Could not add new Source :("});
+			});
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

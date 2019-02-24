@@ -17,44 +17,43 @@ div
           div.col-sm-11
             a.text-primary(:href='`/feed/${dataFeed.slug}/`')
               h4.text-primary {{dataFeed.title}}
-        h5.lead.v-word-break(v-html='dataFeed.summary')
+        h6.v-word-break(v-html='dataFeed.summary')
 </template>
 
 <script>
-import Vue from 'vue';
-import axios from 'axios';
+import Vue from "vue";
 
 export default {
-  props: {
-    feed: {
-      type: Object,
-      default: () => {},
-    },
-    isFeedList: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  data() {
-    return {
-      dataFeed: this.feed,
-    }
-  },
-  computed: {
-    getCommonData() {
-      return this.$store.state.commonData;
-    }
-  },
-  created() {
-    Vue.set(this.dataFeed, "isStarred", false);
-  },
-  methods: {
-    bookmark() {
-      if (!this.isFeedList) Vue.set(this.dataFeed, "isStarred", true);
-      this.$store.commit('bookmarkFeed', this.dataFeed);
-    },
-  }
-}
+	props: {
+		feed: {
+			type: Object,
+			default: () => {},
+		},
+		isFeedList: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	data() {
+		return {
+			dataFeed: this.feed,
+		};
+	},
+	computed: {
+		getCommonData() {
+			return this.$store.state.commonData;
+		}
+	},
+	created() {
+		Vue.set(this.dataFeed, "isStarred", false);
+	},
+	methods: {
+		bookmark() {
+			if (!this.isFeedList) Vue.set(this.dataFeed, "isStarred", true);
+			this.$store.commit("bookmarkFeed", this.dataFeed);
+		},
+	}
+};
 </script>
 
 <style lang="scss">

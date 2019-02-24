@@ -29,12 +29,12 @@ nav.navbar.navbar-expand-lg
 
 <script>
 export default {
-  computed: {
-    getCommonData() {
-      return this.$store.state.commonData;
-    }
-  }
-}
+	computed: {
+		getCommonData() {
+			return this.$store.state.commonData;
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

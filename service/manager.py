@@ -2,7 +2,7 @@ import feeds_pb2_grpc
 from lib.main import (
     get_all_feed_sources, create_new_feed_source, update_feed_source,
     get_all_feeds, create_comment_for_feed, create_bookmark_for_feed,
-    get_custom_feeds, get_feed, get_all_bookmark
+    get_feed, get_custom_feeds, get_all_bookmark
 )
 from utils.logging import log_rpc
 
@@ -16,7 +16,7 @@ class FeedManager(feeds_pb2_grpc.FeedsServicer):
 
     @log_rpc()
     def GetCustomFeeds(self, request, context):
-        """ Return 10 feeds with custom query params
+        """ Return 10 feeds at a time
         """
         return get_custom_feeds(request)
 

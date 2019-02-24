@@ -11,25 +11,24 @@ div.container-fluid.my-3
 </template>
 
 <script>
-import LeftSideBar from '../components/LeftSideBar';
-import RightSideBar from '../components/RightSideBar';
-import FeedList from '../components/FeedList';
+import LeftSideBar from "../components/LeftSideBar";
+import RightSideBar from "../components/RightSideBar";
+import FeedList from "../components/FeedList";
 
 export default {
-  components: {
-    'left-side-bar': LeftSideBar,
-    'right-side-bar': RightSideBar,
-    'feed-list': FeedList,
-  },
-  props: {
-    commonData: {
-      type: Object,
-      default: '{}',
-    },
-  },
-  created() {
-    this.$store.commit('setCommonData', this.commonData);
-    this.$store.commit('getFeeds');
-  },
-}
+	components: {
+		"left-side-bar": LeftSideBar,
+		"right-side-bar": RightSideBar,
+		"feed-list": FeedList,
+	},
+	props: {
+		commonData: {
+			type: Object,
+			default: () => "{}",
+		},
+	},
+	created () {
+		this.$store.commit("setCommonData", this.commonData);
+	},
+};
 </script>

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='core.feeds',
   syntax='proto3',
   serialized_options=_b('H\001'),
-  serialized_pb=_b('\n\x0b\x66\x65\x65\x64s.proto\x12\ncore.feeds\"\x0e\n\x0c\x45mptyRequest\"\xbf\x02\n\x04\x46\x65\x65\x64\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07\x66\x65\x65\x64_id\x18\x02 \x01(\t\x12\r\n\x05title\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x10\n\x08\x61\x64\x64\x65\x64_on\x18\x05 \x01(\t\x12\x0f\n\x07summary\x18\x08 \x01(\t\x12\x0c\n\x04slug\x18\t \x01(\t\x12&\n\x06source\x18\n \x01(\x0b\x32\x16.core.feeds.FeedSource\x12\x0f\n\x07\x64\x65tails\x18\x0b \x01(\t\x12)\n\x0c\x63omment_data\x18\x0c \x03(\x0b\x32\x13.core.feeds.Comment\x12\x0c\n\x04link\x18\r \x01(\t\x12*\n\x05links\x18\x0e \x03(\x0b\x32\x1b.core.feeds.Feed.LinksEntry\x1a,\n\nLinksEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xba\x01\n\x05Query\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.core.feeds.Query.Type\x12\x0f\n\x07\x66\x65\x65\x64_id\x18\x02 \x01(\x03\x12\x1e\n\x04user\x18\x03 \x01(\x0b\x32\x10.core.feeds.User\x12\x13\n\x0bis_paginate\x18\x04 \x01(\x08\x12\x17\n\x0fpaginate_number\x18\x05 \x01(\t\",\n\x04Type\x12\x08\n\x04NONE\x10\x00\x12\x0c\n\x08\x43\x41TEGORY\x10\x01\x12\x0c\n\x08\x42OOKMARK\x10\x02\"\x80\x01\n\nFeedSource\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04link\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\x08\x12\x11\n\tlogo_link\x18\x05 \x01(\t\x12\x16\n\x0elast_active_on\x18\x06 \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\x07 \x01(\t\"I\n\x07\x43omment\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.core.feeds.User\x12\x10\n\x08\x61\x64\x64\x65\x64_on\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"S\n\x0b\x46\x65\x65\x64\x43omment\x12$\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x13.core.feeds.Comment\x12\x1e\n\x04\x66\x65\x65\x64\x18\x02 \x01(\x0b\x32\x10.core.feeds.Feed\"N\n\x0c\x46\x65\x65\x64\x42ookmark\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.core.feeds.User\x12\x1e\n\x04\x66\x65\x65\x64\x18\x02 \x01(\x0b\x32\x10.core.feeds.Feed\"*\n\x08\x46\x65\x65\x64List\x12\x1e\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x10.core.feeds.Feed\"\xbf\x01\n\x0fOperationStatus\x12%\n\top_status\x18\x01 \x01(\x0e\x32\x12.core.feeds.Status\x12\x39\n\x07\x64\x65tails\x18\x02 \x03(\x0b\x32(.core.feeds.OperationStatus.DetailsEntry\x1aJ\n\x0c\x44\x65tailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.core.feeds.RepeatedString:\x02\x38\x01\"6\n\x0e\x46\x65\x65\x64SourceList\x12$\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x16.core.feeds.FeedSource\"\x18\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\"\x1e\n\x0eRepeatedString\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\t*/\n\x06Status\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07\x46\x41ILURE\x10\x02\x32\xea\x04\n\x05\x46\x65\x65\x64s\x12\x38\n\x0bGetAllFeeds\x12\x11.core.feeds.Query\x1a\x14.core.feeds.FeedList\"\x00\x12;\n\x0eGetCustomFeeds\x12\x11.core.feeds.Query\x1a\x14.core.feeds.FeedList\"\x00\x12/\n\x07GetFeed\x12\x10.core.feeds.Feed\x1a\x10.core.feeds.Feed\"\x00\x12K\n\x11\x43reateFeedComment\x12\x17.core.feeds.FeedComment\x1a\x1b.core.feeds.OperationStatus\"\x00\x12M\n\x12\x43reateFeedBookmark\x12\x18.core.feeds.FeedBookmark\x1a\x1b.core.feeds.OperationStatus\"\x00\x12:\n\x0eGetAllBookmark\x12\x10.core.feeds.User\x1a\x14.core.feeds.FeedList\"\x00\x12I\n\x10\x43reateFeedSource\x12\x16.core.feeds.FeedSource\x1a\x1b.core.feeds.OperationStatus\"\x00\x12I\n\x10UpdateFeedSource\x12\x16.core.feeds.FeedSource\x1a\x1b.core.feeds.OperationStatus\"\x00\x12K\n\x11GetAllFeedSources\x12\x18.core.feeds.EmptyRequest\x1a\x1a.core.feeds.FeedSourceList\"\x00\x42\x02H\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0b\x66\x65\x65\x64s.proto\x12\ncore.feeds\"\x0e\n\x0c\x45mptyRequest\"\xbf\x02\n\x04\x46\x65\x65\x64\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07\x66\x65\x65\x64_id\x18\x02 \x01(\t\x12\r\n\x05title\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x10\n\x08\x61\x64\x64\x65\x64_on\x18\x05 \x01(\t\x12\x0f\n\x07summary\x18\x08 \x01(\t\x12\x0c\n\x04slug\x18\t \x01(\t\x12&\n\x06source\x18\n \x01(\x0b\x32\x16.core.feeds.FeedSource\x12\x0f\n\x07\x64\x65tails\x18\x0b \x01(\t\x12)\n\x0c\x63omment_data\x18\x0c \x03(\x0b\x32\x13.core.feeds.Comment\x12\x0c\n\x04link\x18\r \x01(\t\x12*\n\x05links\x18\x0e \x03(\x0b\x32\x1b.core.feeds.Feed.LinksEntry\x1a,\n\nLinksEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa5\x01\n\x05Query\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.core.feeds.Query.Type\x12\x0f\n\x07\x66\x65\x65\x64_id\x18\x02 \x01(\x03\x12\x1e\n\x04user\x18\x03 \x01(\x0b\x32\x10.core.feeds.User\x12\x17\n\x0fpaginate_number\x18\x05 \x01(\t\",\n\x04Type\x12\x08\n\x04NONE\x10\x00\x12\x0c\n\x08\x43\x41TEGORY\x10\x01\x12\x0c\n\x08\x42OOKMARK\x10\x02\"\x80\x01\n\nFeedSource\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04link\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\x08\x12\x11\n\tlogo_link\x18\x05 \x01(\t\x12\x16\n\x0elast_active_on\x18\x06 \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\x07 \x01(\t\"I\n\x07\x43omment\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.core.feeds.User\x12\x10\n\x08\x61\x64\x64\x65\x64_on\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\"S\n\x0b\x46\x65\x65\x64\x43omment\x12$\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x13.core.feeds.Comment\x12\x1e\n\x04\x66\x65\x65\x64\x18\x02 \x01(\x0b\x32\x10.core.feeds.Feed\"N\n\x0c\x46\x65\x65\x64\x42ookmark\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.core.feeds.User\x12\x1e\n\x04\x66\x65\x65\x64\x18\x02 \x01(\x0b\x32\x10.core.feeds.Feed\"*\n\x08\x46\x65\x65\x64List\x12\x1e\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x10.core.feeds.Feed\"\xbf\x01\n\x0fOperationStatus\x12%\n\top_status\x18\x01 \x01(\x0e\x32\x12.core.feeds.Status\x12\x39\n\x07\x64\x65tails\x18\x02 \x03(\x0b\x32(.core.feeds.OperationStatus.DetailsEntry\x1aJ\n\x0c\x44\x65tailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.core.feeds.RepeatedString:\x02\x38\x01\"6\n\x0e\x46\x65\x65\x64SourceList\x12$\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x16.core.feeds.FeedSource\"\x18\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\"\x1e\n\x0eRepeatedString\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\t*/\n\x06Status\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07\x46\x41ILURE\x10\x02\x32\xea\x04\n\x05\x46\x65\x65\x64s\x12\x38\n\x0bGetAllFeeds\x12\x11.core.feeds.Query\x1a\x14.core.feeds.FeedList\"\x00\x12;\n\x0eGetCustomFeeds\x12\x11.core.feeds.Query\x1a\x14.core.feeds.FeedList\"\x00\x12/\n\x07GetFeed\x12\x10.core.feeds.Feed\x1a\x10.core.feeds.Feed\"\x00\x12K\n\x11\x43reateFeedComment\x12\x17.core.feeds.FeedComment\x1a\x1b.core.feeds.OperationStatus\"\x00\x12M\n\x12\x43reateFeedBookmark\x12\x18.core.feeds.FeedBookmark\x1a\x1b.core.feeds.OperationStatus\"\x00\x12:\n\x0eGetAllBookmark\x12\x10.core.feeds.User\x1a\x14.core.feeds.FeedList\"\x00\x12I\n\x10\x43reateFeedSource\x12\x16.core.feeds.FeedSource\x1a\x1b.core.feeds.OperationStatus\"\x00\x12I\n\x10UpdateFeedSource\x12\x16.core.feeds.FeedSource\x1a\x1b.core.feeds.OperationStatus\"\x00\x12K\n\x11GetAllFeedSources\x12\x18.core.feeds.EmptyRequest\x1a\x1a.core.feeds.FeedSourceList\"\x00\x42\x02H\x01\x62\x06proto3')
 )
 
 _STATUS = _descriptor.EnumDescriptor(
@@ -44,8 +44,8 @@ _STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1277,
-  serialized_end=1324,
+  serialized_start=1256,
+  serialized_end=1303,
 )
 _sym_db.RegisterEnumDescriptor(_STATUS)
 
@@ -76,8 +76,8 @@ _QUERY_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=508,
-  serialized_end=552,
+  serialized_start=487,
+  serialized_end=531,
 )
 _sym_db.RegisterEnumDescriptor(_QUERY_TYPE)
 
@@ -280,14 +280,7 @@ _QUERY = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='is_paginate', full_name='core.feeds.Query.is_paginate', index=3,
-      number=4, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='paginate_number', full_name='core.feeds.Query.paginate_number', index=4,
+      name='paginate_number', full_name='core.feeds.Query.paginate_number', index=3,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -307,7 +300,7 @@ _QUERY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=366,
-  serialized_end=552,
+  serialized_end=531,
 )
 
 
@@ -379,8 +372,8 @@ _FEEDSOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=555,
-  serialized_end=683,
+  serialized_start=534,
+  serialized_end=662,
 )
 
 
@@ -424,8 +417,8 @@ _COMMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=685,
-  serialized_end=758,
+  serialized_start=664,
+  serialized_end=737,
 )
 
 
@@ -462,8 +455,8 @@ _FEEDCOMMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=760,
-  serialized_end=843,
+  serialized_start=739,
+  serialized_end=822,
 )
 
 
@@ -500,8 +493,8 @@ _FEEDBOOKMARK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=845,
-  serialized_end=923,
+  serialized_start=824,
+  serialized_end=902,
 )
 
 
@@ -531,8 +524,8 @@ _FEEDLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=925,
-  serialized_end=967,
+  serialized_start=904,
+  serialized_end=946,
 )
 
 
@@ -569,8 +562,8 @@ _OPERATIONSTATUS_DETAILSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1087,
-  serialized_end=1161,
+  serialized_start=1066,
+  serialized_end=1140,
 )
 
 _OPERATIONSTATUS = _descriptor.Descriptor(
@@ -606,8 +599,8 @@ _OPERATIONSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=970,
-  serialized_end=1161,
+  serialized_start=949,
+  serialized_end=1140,
 )
 
 
@@ -637,8 +630,8 @@ _FEEDSOURCELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1163,
-  serialized_end=1217,
+  serialized_start=1142,
+  serialized_end=1196,
 )
 
 
@@ -668,8 +661,8 @@ _USER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1219,
-  serialized_end=1243,
+  serialized_start=1198,
+  serialized_end=1222,
 )
 
 
@@ -699,8 +692,8 @@ _REPEATEDSTRING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1245,
-  serialized_end=1275,
+  serialized_start=1224,
+  serialized_end=1254,
 )
 
 _FEED_LINKSENTRY.containing_type = _FEED
@@ -847,8 +840,8 @@ _FEEDS = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1327,
-  serialized_end=1945,
+  serialized_start=1306,
+  serialized_end=1924,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetAllFeeds',
