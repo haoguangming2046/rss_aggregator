@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import helpers from '../helpers/index';
+import axios from '../globals';
+
 Vue.use(Vuex);
 
 const state = {
-  categoryId: -1,
   feeds: [],
   currentFeeds: [],
   categoryFeedCount: {},
@@ -19,32 +21,64 @@ const mutations = {
     Vue.set(state.commonData, 'isAdmin', payload.is_admin);
   },
   setCategory (state, payload) {
-    if (payload === -1) {
+    if (payload == -1) {
       state.currentFeeds = state.feeds;
-    } else if (payload === 0) {
+    } else if (payload == 0) {
       state.currentFeeds = state.feeds.filter(feed => feed.isStarred === true);
     } else {
-      state.currentFeeds = state.feeds.filter(feed => feed.source === payload );
+      state.currentFeeds = state.feeds.filter(feed => feed.source.id == payload );
     }
   },
   updateCategoryCount (state, payload) {
     state.categoryCount = payload;
   },
   getFeeds() {
-    const response = [
-      {id: 1, title: 'First Article', content: 'First Article Content ...', source: 1, isStarred: true, comments: [{name: 'PK', content: 'First Arcticle Comment', time: 'Today 12:10'}] },
-      {id: 2, title: 'Second Article', content: 'Second Article Content ...', source: 2, isStarred: true, comments: [{name: 'PK', content:  'Second Article Comment', time: 'Today 12:10'}] },
-      {id: 3, title: 'Third Article', content: 'Third Article Content ...', source: 2, isStarred: false, comments: [{name: 'PK', content: '## Third Article Heading', time: 'Today 12:10'}, {name: 'PK', content: '```Third Article Code Block```', time: 'Today 12:10'}] },
-    ];
-    state.feeds = response;
-    state.currentFeeds = response;
-    state.feeds.forEach(feed => {
-      if (feed.source in state.categoryFeedCount) {
-        Vue.set(state.categoryFeedCount, feed.source, state.categoryFeedCount[feed.source] + 1);
-      } else {
-        Vue.set(state.categoryFeedCount, feed.source, 1);
+    axios.get('/api/feeds').then(response => {
+      if ("data" in response.data) {
+        state.feeds = response.data.data;
+        state.feeds.forEach(feed => {
+          Vue.set(feed, "isStarred", false);
+          Vue.set(feed, "comments", []);
+          if (feed.source.id in state.categoryFeedCount) {
+            Vue.set(state.categoryFeedCount, feed.source.id, state.categoryFeedCount[feed.source.id] + 1);
+          } else {
+            Vue.set(state.categoryFeedCount, feed.source.id, 1);
+          }
+        });
+        state.currentFeeds = state.feeds;
+        axios.get('/api/user/bookmarks').then(response => {
+          if ("data" in response.data) {
+            response.data.data.forEach(bookmark => {
+              let feed = state.feeds.find(feed => feed.id == bookmark.id);
+              if (feed) {
+                feed.isStarred = true;
+              }
+            });
+          }
+        }).catch(error => {
+          helpers.methods.createNotification({message: "Could not get bookmarks :("});
+          console.log(error);
+        });
       }
+    }).catch(error => {
+      helpers.methods.createNotification({message: "Could not get feeds :("});
+      console.log(error);
     });
+  },
+  bookmarkFeed(state, payload) {
+    let feed = state.feeds.find(feed => feed.id == payload.id);
+    axios.post('/api/user/bookmark/create', {
+      data: {
+        feed: payload,
+      },
+    }).then(() => {
+      helpers.methods.createNotification({message: "Bookmark Added :)", context: "alert-success"});
+    }).catch(error => {
+      if (feed) feed.isStarred = false;
+      helpers.methods.createNotification({message: "Could not add bookmark :("});
+      console.log(error);
+    });
+    if (feed) feed.isStarred = true;
   },
 };
 

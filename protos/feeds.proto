@@ -10,6 +10,7 @@ service Feeds {
   rpc GetFeed (Feed) returns (Feed) {}
   rpc CreateFeedComment (FeedComment) returns (OperationStatus) {}
   rpc CreateFeedBookmark (FeedBookmark) returns (OperationStatus) {}
+  rpc GetAllBookmark (User) returns (FeedList) {}
 
   rpc CreateFeedSource (FeedSource) returns (OperationStatus) {}
   rpc UpdateFeedSource (FeedSource) returns (OperationStatus) {}
@@ -26,14 +27,12 @@ message Feed {
   string author = 4;
   string added_on = 5;
   string summary = 8;
+  string slug = 9;
   FeedSource source = 10;
-
-  message FeedDetail {
-    string content_json = 1;
-  }
-
-  FeedDetail details = 11;
+  string details = 11;
   repeated Comment comment_data = 12;
+  string link = 13;
+  map<string, string> links = 14;
 }
 
 message Query {
@@ -56,6 +55,7 @@ message FeedSource {
   bool status = 4;
   string logo_link = 5;
   string last_active_on = 6;
+  string details = 7;
 }
 
 message Comment {

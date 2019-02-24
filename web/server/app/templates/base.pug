@@ -17,4 +17,6 @@ html(lang="en")
       {% endblock %}
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js")
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js')
-    script(src='http://localhost:8081/dist/bundle.js')
+    //- Toggle for testing on docker vs developing with hot reload
+    script(src='{% static "js/bundle.js" %}')
+    //- script(src='http://localhost:8081/dist/bundle.js')

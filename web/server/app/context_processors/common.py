@@ -9,7 +9,7 @@ def template(request):
         context.update({'is_logged_in': False})
     else:
         context.update({
-            'logged_in_user': True,
+            'is_logged_in': True,
             'user_id': request.user.id,
             'user_name': request.user.username,
             'is_admin': request.user.is_staff

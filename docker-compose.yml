@@ -1,0 +1,103 @@
+version: '3'
+
+services:
+  mysql_web:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'rss_web'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '3306:3306'
+    volumes:
+      - my-db:/var/lib/mysql
+
+  mysql_service:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'rss_service'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '3308:3306'
+    volumes:
+      - my-service-db:/var/lib/mysql
+
+  web:
+    build:
+      context: web
+    command: >
+      sh -c "cd web/server &&
+             export DJANGO_SETTINGS_MODULE='server.settings.development' &&
+             export FEED_MANAGER_HOST='service:50053' &&
+             export DB_HOST=mysql_web &&
+             export DB_PORT=3306 &&
+             python manage.py migrate &&
+             python manage.py user_fixture &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql_web
+
+  service:
+    build:
+      context: service
+      dockerfile: Dockerfile
+    command: >
+      sh -c "cd service &&
+             export DJANGO_SETTINGS_MODULE=settings &&
+             export DB_HOST=mysql_service &&
+             export DB_PORT=3306 &&
+             python manage.py migrate &&
+             python serve.py &&
+             cd one-off-scripts &&
+             python source_fixture.py &&
+             cd .. &&
+             celery -A utils.tasks worker -B -l info"
+    volumes:
+      - .:/code
+    ports:
+      - "50053:50053"
+    depends_on:
+      - mysql_service
+
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+        - "5673:5672"
+
+  tasks:
+    build:
+      context: service
+      dockerfile: Dockerfile
+    command: >
+      sh -c "cd service &&
+             export DJANGO_SETTINGS_MODULE=settings &&
+             export TASKS_QUEUE_HOST='pyamqp://admin:mypass@rabbit:5672//' &&
+             export DB_HOST=mysql_service &&
+             export DB_PORT=3306 &&
+             celery -A utils.tasks worker -B -l info"
+    volumes:
+      - .:/code
+    links:
+      - rabbit
+    depends_on:
+      - rabbit
+      - mysql_service
+
+volumes:
+  my-db:
+  my-service-db:

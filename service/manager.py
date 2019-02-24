@@ -2,7 +2,7 @@ import feeds_pb2_grpc
 from lib.main import (
     get_all_feed_sources, create_new_feed_source, update_feed_source,
     get_all_feeds, create_comment_for_feed, create_bookmark_for_feed,
-    get_custom_feeds, get_feed
+    get_custom_feeds, get_feed, get_all_bookmark
 )
 from utils.logging import log_rpc
 
@@ -39,10 +39,16 @@ class FeedManager(feeds_pb2_grpc.FeedsServicer):
         return create_bookmark_for_feed(request)
 
     @log_rpc()
+    def GetAllBookmark(self, request, context):
+        """ Get all bookmarks for a user
+        """
+        return get_all_bookmark(request)
+
+    @log_rpc()
     def CreateFeedSource(self, request, context):
         """ Validate and Create new Feed Source
         """
-        return create_new_feed_source(request)
+        return create_new_feed_source(request.link)
 
     @log_rpc()
     def UpdateFeedSource(self, request, context):
@@ -51,7 +57,7 @@ class FeedManager(feeds_pb2_grpc.FeedsServicer):
         return update_feed_source(request)
 
     @log_rpc()
-    def GetAllFeedSource(self, request, context):
+    def GetAllFeedSources(self, request, context):
         """ Return All Feed Sources
         """
         return get_all_feed_sources(request)

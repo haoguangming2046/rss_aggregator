@@ -19,9 +19,7 @@ html, body {
 
 // Main Div used in base.pug
 #main {
-  background-image: linear-gradient(to top right, rgba(179, 186, 253, 0.7), rgba(162, 148, 239, 0.7), rgba(228, 202, 246, 0.7), rgba(244, 222, 226, 0.7), rgba(253, 210, 226, 0.7));
-  // background-image: linear-gradient(RGBA(242, 153, 74, 0.7), RGBA(242, 201, 76, 0.7));
-  // background-image: linear-gradient(to top right, RGBA(130, 63, 177, 0.7), RGBA(250, 34, 42, 0.7), RGBA(250, 175, 80, 0.7));
+  background-image: linear-gradient(to top right, RGBA(207, 222, 242, 1.00), RGBA(224, 234, 251, 1));
   height: auto;
   min-height: 100%;
   width: 100%;
@@ -48,6 +46,23 @@ html, body {
   background-color: $color-whiteish;
   box-shadow: 0.5rem 0.6rem RGBA(202, 178, 227, 0.2);
 }
+
+// Aligned Image
+.c-img-div {
+  display: table;
+  a {
+    vertical-align: middle;
+    display: table-cell;
+    img {
+      border-radius: 0.5em;
+      overflow: hidden;
+      display: block;
+      height: auto;
+      width: 100%;
+    }
+  }
+}
+
 
 // Slide Animation
 .c-slide-animated {

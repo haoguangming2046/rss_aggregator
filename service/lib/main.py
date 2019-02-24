@@ -2,11 +2,15 @@ import json
 from datetime import datetime
 
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.template.defaultfilters import slugify
 from django.db import transaction
 
 from db.models import FeedSource, Feed, Bookmarked, Comment, FeedDetail
 from utils.logging import logger
-from utils.feed import get_feed_list, get_feed_details, get_feed_sources_list
+from utils.feed import (
+    get_feed_list, get_feed_details, get_feed_sources_list,
+    get_bookmark_list, get_link_from_feed, get_links_from_feed
+)
 from utils.parse import parse_new_feeds
 import feeds_pb2
 
@@ -21,6 +25,9 @@ def create_new_feed(feed, source):
                 title=feed["title"],
                 summary=feed["summary"],
                 author=feed["author"],
+                slug=slugify(feed["id"] + feed['title']),
+                link=get_link_from_feed(feed),
+                links=get_links_from_feed(feed),
                 source=source,
             )
             FeedDetail.objects.create(
@@ -40,7 +47,7 @@ def create_new_feed(feed, source):
 def get_all_feeds(request):
     """ Return 10 feeds at a time
     """
-    feeds = Feed.objects.all().order_by('-id')[:10]
+    feeds = Feed.objects.all().order_by('-id')[:50]
     return get_feed_list(feeds)
 
 
@@ -59,13 +66,14 @@ def get_feed(request):
     """ Return feeds with details and Original JSON
     """
     try:
-        feed = Feed.objects.get(id=request.id)
+        feed = Feed.objects.get(slug=request.slug)
         details = FeedDetail.objects.get(feed=feed.id)
         comments = Comment.objects.filter(feed=feed.id)
     except ObjectDoesNotExist as e:
         exc = e
         logger(__name__, "Could not get feed due to {}".format(str(exc)))
-    return get_feed_details(feed, details, comments)
+        return feeds_pb2.Feed()
+    return get_feed_details(feed, details.content_json, comments)
 
 
 def create_comment_for_feed(request):
@@ -113,21 +121,28 @@ def create_bookmark_for_feed(request):
     )
 
 
-def create_new_feed_source(request):
+def get_all_bookmark(request):
+    """ Get all feed ids bookmaker for a user
+    """
+    bookmarks = Bookmarked.objects.filter(user=request.username)
+    return get_bookmark_list(bookmarks)
+
+
+def create_new_feed_source(link):
     """ Validate and Create new Feed Source
     """
     try:
-        response = parse_new_feeds(request.link)
+        response = parse_new_feeds(link)
         if response["status"]:
             if "logo" in response["details"]:
                 logo_link = response["details"]["logo"]
-            if "image" in response["details"]:
+            elif "image" in response["details"]:
                 logo_link = response["details"]["image"]["href"]
             else:
                 logo_link = ''
             source = FeedSource.objects.create(
                 name=response["details"]["title"],
-                link=request.link,
+                link=link,
                 logo_link=logo_link,
                 details=json.dumps(response["details"]),
             )
@@ -156,7 +171,7 @@ def update_feed_source(request):
     """
     try:
         feed = FeedSource.objects.get(id=request.id)
-        feed.status = request.status
+        feed.status = not feed.status
         feed.save()
     except (ValidationError, FeedSource.DoesNotExist) as e:
         exc = e

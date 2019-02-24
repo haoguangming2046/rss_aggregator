@@ -8,9 +8,10 @@ django = "==2.1.7"
 pypugjs = "==5.7.2"
 libsass = "==0.17.0"
 django-sass-processor = "==0.7.2"
+grpcio-tools = "==1.18.0"
+mysqlclient = "==1.4.2.post1"
 
 [dev-packages]
-django-extensions = "==2.1.6"
 pycodestyle = "*"
 
 [requires]

@@ -10,10 +10,10 @@ except Exception:
 
 
 class FeedSource(models.Model):
-    name = models.CharField(max_length=1000, null=False)
+    name = models.TextField(null=False)
     status = models.BooleanField(default=True)
-    link = models.CharField(max_length=1000, null=False, default='', unique=True)
-    logo_link = models.CharField(max_length=1000, default='')
+    link = models.TextField(null=False, default='', unique=True)
+    logo_link = models.TextField(default='')
     last_active_on = models.DateTimeField(auto_now_add=True)
     details = models.TextField()
 
@@ -21,7 +21,7 @@ class FeedSource(models.Model):
         return self.name
 
     def clean(self):
-        if not (self.name or self.link or self.logo_link or self.details):
+        if not (self.name or self.link or self.details):
             raise ValidationError(
                 {NON_FIELD_ERRORS: 'Insufficient Data'}
             )
@@ -33,11 +33,14 @@ class FeedSource(models.Model):
 
 class Feed(models.Model):
     feed_id = models.CharField(max_length=100, null=False, default='', unique=True)
-    title = models.CharField(max_length=1000, null=False, default='')
+    title = models.TextField(null=False, default='')
     summary = models.TextField()
     author = models.CharField(max_length=100, null=False, default='')
     added_on = models.DateTimeField(auto_now_add=True)
     source = models.ForeignKey(FeedSource, on_delete=models.CASCADE)
+    slug = models.TextField(null=False, unique=True)
+    link = models.TextField(blank=True, default='')
+    links = models.TextField()
 
     def __str__(self):
         return self.title
@@ -58,7 +61,7 @@ class FeedDetail(models.Model):
     content_json = models.TextField()
 
     def __str__(self):
-        return self.feed.tittle
+        return self.feed.title
 
     def clean(self):
         if not (self.feed or self.content_json):

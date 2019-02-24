@@ -1,7 +1,9 @@
+import os
 from datetime import timedelta
 
 import django
 from django.core.exceptions import ValidationError
+
 from celery import Celery
 
 django.setup()
@@ -10,7 +12,13 @@ from db.models import FeedSource
 from lib.main import create_new_feed
 from utils.parse import parse_new_feeds
 
-celery = Celery(__name__)
+celery = Celery(
+    __name__,
+    broker=os.environ.get(
+        "TASKS_QUEUE_HOST",
+        "amqp://guest:guest@localhost:5672//"
+    ),
+)
 celery.config_from_object(__name__)
 
 
