@@ -7,3 +7,5 @@
 web/server/node_modules
 web/server/static/
 web/server/app/src/dist/
+
+service/celerybeat-schedule

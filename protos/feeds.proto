@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+
+package core.feeds;
+
+service Feeds {
+  rpc GetAllFeeds (Query) returns (FeedList) {}
+  rpc GetCustomFeeds (Query) returns (FeedList) {}
+  rpc GetFeed (Feed) returns (Feed) {}
+  rpc CreateFeedComment (FeedComment) returns (OperationStatus) {}
+  rpc CreateFeedBookmark (FeedBookmark) returns (OperationStatus) {}
+
+  rpc CreateFeedSource (FeedSource) returns (OperationStatus) {}
+  rpc UpdateFeedSource (FeedSource) returns (OperationStatus) {}
+  rpc GetAllFeedSources (EmptyRequest) returns (FeedSourceList) {}
+}
+
+// Request Messages
+message EmptyRequest {}
+
+message Feed {
+  int64 id = 1;
+  string feed_id = 2;
+  string title = 3;
+  string author = 4;
+  string added_on = 5;
+  string summary = 8;
+  FeedSource source = 10;
+
+  message FeedDetail {
+    string content_json = 1;
+  }
+
+  FeedDetail details = 11;
+  repeated Comment comment_data = 12;
+}
+
+message Query {
+  enum Type {
+    NONE = 0;
+    CATEGORY = 1;
+    BOOKMARK = 2;
+  }
+  Type type = 1;
+  int64 feed_id = 2;
+  User user = 3;
+  bool is_paginate = 4;
+  string paginate_number = 5;
+}
+
+message FeedSource {
+  int64 id = 1;
+  string name = 2;
+  string link = 3;
+  bool status = 4;
+  string logo_link = 5;
+  string last_active_on = 6;
+}
+
+message Comment {
+  User user = 1;
+  string added_on = 2;
+  string text = 3;
+}
+
+message FeedComment {
+  Comment comment = 1;
+  Feed feed = 2;
+}
+
+message FeedBookmark {
+  User user = 1;
+  Feed feed = 2;
+}
+
+// Response Messages
+message FeedList {
+  repeated Feed data = 1;
+}
+
+message OperationStatus {
+  Status op_status = 1;
+  map<string, RepeatedString> details = 2;
+}
+
+message FeedSourceList {
+  repeated FeedSource data = 1;
+}
+
+
+// Common
+enum Status {
+  UNKNOWN = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+}
+
+message User {
+  string username = 1;
+}
+
+message RepeatedString {
+  repeated string data = 1;
+}

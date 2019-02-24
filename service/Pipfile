@@ -4,14 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+feedparser = "==5.2.1"
+grpcio-tools = "==1.18.0"
 django = "==2.1.7"
-pypugjs = "==5.7.2"
-libsass = "==0.17.0"
-django-sass-processor = "==0.7.2"
+celery = "==4.2.1"
 
 [dev-packages]
-django-extensions = "==2.1.6"
-pycodestyle = "*"
+"pycodestyle" = "*"
 
 [requires]
 python_version = "3.6"
